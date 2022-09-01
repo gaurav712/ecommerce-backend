@@ -50,7 +50,8 @@ if (process.env.NODE_ENV !== "test") {
       process.env.MONGO_USERNAME
     }:${encodeURIComponent(
       process.env.MONGO_PASSWORD
-    )}@cluster0.kyaly.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+    )}@cluster0.gqwl0nf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+
     connectDB(MONGO_URI);
   }
   app.listen(port, () => console.log("Server is running on", port));
