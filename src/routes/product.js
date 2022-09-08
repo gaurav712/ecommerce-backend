@@ -8,27 +8,10 @@ const auth = require("./middlewares/auth");
 const productRouter = express.Router();
 // Create Product
 productRouter.post("/api/product", async (req, res) => {
-  const {
-    productName,
-    description,
-    unitPrice,
-    categoryID,
-    stock,
-    warranty,
-    userType,
-    imagePath,
-  } = req.body;
+  const { productName, description, unitPrice, category, imagePath } = req.body;
 
   if (
-    !validateReqBody(
-      productName,
-      description,
-      unitPrice,
-      categoryID,
-      stock,
-      warranty,
-      imagePath
-    )
+    !validateReqBody(productName, description, unitPrice, category, imagePath)
   ) {
     return res.status(401).send({
       status: false,
@@ -37,20 +20,11 @@ productRouter.post("/api/product", async (req, res) => {
     });
   }
   try {
-    if (userType != 2) {
-      throw new Error("invalid user type");
-    }
-
     const newProduct = new Product({
       productName,
       description,
       unitPrice,
-      categoryID,
-      stock,
-      warranty,
-      rate: 0,
-      rateCount: 0,
-      rateTotal: 0,
+      category,
       imagePath,
     });
 
@@ -216,7 +190,7 @@ productRouter.post("/api/rate/product", auth, async (req, res) => {
     const newProduct = await Product.findByIdAndUpdate(id, aproduct, {
       new: true,
     });
-    
+
     await User.findByIdAndUpdate(user._id, user, { new: true });
 
     if (!isFound) {
