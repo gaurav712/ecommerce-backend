@@ -66,9 +66,13 @@ productRouter.delete("/api/product/:id", async (req, res) => {
 });
 
 // GET all products
-productRouter.get("/api/products", async (req, res) => {
+productRouter.get("/api/products/:limit/:skip", async (req, res) => {
+  const { limit, skip } = req.params;
+
   try {
-    const products = await Product.find({});
+    const products = await Product.find({})
+      .skip(parseInt(skip))
+      .limit(parseInt(limit));
     return res.send({ status: true, products });
   } catch (error) {
     const validationErr = getErrors(error);
