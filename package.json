@@ -5,7 +5,7 @@
   "main": "./src/index.js",
   "scripts": {
     "test": "jest --detectOpenHandles --runInBand --forceExit --verbose=false",
-    "dev": "nodemon index.js"
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
