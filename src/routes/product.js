@@ -66,8 +66,8 @@ productRouter.delete("/api/product/:id", async (req, res) => {
 });
 
 // GET all products
-productRouter.get("/api/products/:limit/:skip", async (req, res) => {
-  const { limit, skip } = req.params;
+productRouter.get("/api/products/:limit?/:skip?", async (req, res) => {
+  const { limit = 20, skip = 0 } = req.params;
 
   try {
     const products = await Product.find({})
