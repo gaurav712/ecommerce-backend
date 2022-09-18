@@ -65,6 +65,20 @@ productRouter.delete("/api/product/:id", async (req, res) => {
   }
 });
 
+// GET all categories of products
+productRouter.get("/api/categories", async (req, res) => {
+  try {
+    const categories = await Product.distinct("category");
+    return res.send({ status: true, categories });
+  } catch (error) {
+    const validationErr = getErrors(error);
+    console.log(validationErr);
+    return res
+      .status(401)
+      .send({ status: false, type: "VALIDATION", error: validationErr });
+  }
+});
+
 // GET all products
 productRouter.get("/api/products/:limit?/:skip?", async (req, res) => {
   const { limit = 20, skip = 0 } = req.params;
