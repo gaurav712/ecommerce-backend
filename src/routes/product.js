@@ -80,22 +80,32 @@ productRouter.get("/api/categories", async (req, res) => {
 });
 
 // GET all products
-productRouter.get("/api/products/:limit?/:skip?", async (req, res) => {
-  const { limit = 20, skip = 0 } = req.params;
+productRouter.get(
+  "/api/products/:category?/:limit?/:skip?",
+  async (req, res) => {
+    const { category, limit = 20, skip = 0 } = req.params;
 
-  try {
-    const products = await Product.find({})
-      .skip(parseInt(skip))
-      .limit(parseInt(limit));
-    return res.send({ status: true, products });
-  } catch (error) {
-    const validationErr = getErrors(error);
-    console.log(validationErr);
-    return res
-      .status(401)
-      .send({ status: false, type: "VALIDATION", error: validationErr });
+    try {
+      let products;
+      if (category) {
+        products = await Product.find({ category })
+          .skip(parseInt(skip))
+          .limit(parseInt(limit));
+      } else {
+        products = await Product.find({})
+          .skip(parseInt(skip))
+          .limit(parseInt(limit));
+      }
+      return res.send({ status: true, products });
+    } catch (error) {
+      const validationErr = getErrors(error);
+      console.log(validationErr);
+      return res
+        .status(401)
+        .send({ status: false, type: "VALIDATION", error: validationErr });
+    }
   }
-});
+);
 
 // GET a product
 productRouter.get("/api/product/:id", async (req, res) => {
