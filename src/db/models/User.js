@@ -17,12 +17,12 @@ const UserSchema = new Schema(
       trim: true,
       required: [true, "Password is required"],
     },
-    username: {
-      type: String,
-      required: [true, "Username is required"],
-      trim: true,
-      unique: true,
-    },
+    //username: {
+    //type: String,
+    //required: [true, "Username is required"],
+    //trim: true,
+    //unique: true,
+    //},
     token: { type: String },
     address: { type: String, default: "" },
     taxID: { type: String, default: "" },
